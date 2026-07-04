@@ -73,7 +73,7 @@ export default function Navbar() {
               <Trophy className="w-5 h-5 text-white" />
             </div>
             <div className="flex flex-col leading-tight">
-              <span className="text-xl font-black" style={{ color: "oklch(0.35 0.15 145)", fontFamily: "'Cairo', sans-serif" }}>منصة علم</span>
+              <span className="text-xl font-black" style={{ color: "oklch(0.35 0.15 145)", fontFamily: "'Cairo', sans-serif" }}>منصة المسابقات</span>
               <span className="text-xs font-medium" style={{ color: "oklch(0.72 0.15 75)", lineHeight: 1 }}>للمسابقات التعليمية</span>
             </div>
           </Link>

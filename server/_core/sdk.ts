@@ -39,8 +39,13 @@ class OAuthService {
   }
 
   private decodeState(state: string): string {
-    const redirectUri = atob(state);
-    return redirectUri;
+    try {
+      const redirectUri = Buffer.from(state, 'base64').toString('utf8');
+      return redirectUri;
+    } catch (error) {
+      console.error('[OAuth] Failed to decode state:', error);
+      throw new Error('Invalid state parameter');
+    }
   }
 
   async getTokenByCode(
