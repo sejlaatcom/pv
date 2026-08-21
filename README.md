@@ -90,6 +90,9 @@ php database/migrate.php
 
 ### 3) التشغيل
 
+> دليل مفصّل خطوة بخطوة للتشغيل على الجهاز المحلي (XAMPP / Laragon / MAMP / خادم PHP
+> المدمج) مع حل المشكلات الشائعة: **[INSTALL.md](INSTALL.md)**
+
 **محلياً:**
 
 ```bash
