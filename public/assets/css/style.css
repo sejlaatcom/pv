@@ -354,12 +354,14 @@ table.data tr:hover td { background: #fafafa; }
 .sticky-side { position: sticky; top: 88px; }
 
 /* ===== لوحة المتصدرين ===== */
-.podium { display: flex; align-items: flex-end; justify-content: center; gap: 14px; padding: 26px 0; }
-.podium-col { width: 150px; text-align: center; }
+.podium { display: flex; align-items: flex-end; justify-content: center; gap: 14px; padding: 26px 0 0; }
+.podium-col { width: 150px; text-align: center; display: flex; flex-direction: column; justify-content: flex-end; }
+.podium-medal { font-size: 22px; height: 30px; }
 .podium-face { width: 62px; height: 62px; border-radius: 50%; margin: 0 auto 8px; display: grid; place-items: center; color: #fff; font-size: 22px; font-weight: 900; box-shadow: var(--shadow); }
 .podium-bar { border-radius: 16px 16px 0 0; color: #fff; font-weight: 900; padding-top: 12px; }
-.podium-name { font-size: 14px; font-weight: 900; }
-.podium-group { font-size: 11px; color: var(--muted); margin-bottom: 8px; }
+/* ارتفاع ثابت للاسم والمجموعة حتى تستوي قواعد الأعمدة الثلاثة */
+.podium-name { font-size: 14px; font-weight: 900; min-height: 44px; display: flex; align-items: center; justify-content: center; }
+.podium-group { font-size: 11px; color: var(--muted); margin-bottom: 8px; min-height: 18px; }
 
 /* ===== الرسوم البيانية ===== */
 .chart { width: 100%; height: auto; display: block; }

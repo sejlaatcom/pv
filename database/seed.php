@@ -19,6 +19,8 @@ function seed_demo_data(): array
     db_update('entities', $entityId, [
         'subscription_status'  => 'active',
         'subscription_ends_at' => date('Y-m-d', strtotime('+1 year')),
+        'allow_self_register'  => 1,
+        'public_board'         => 1,
     ]);
     entity_seed_defaults($entityId);
 

@@ -190,6 +190,19 @@ try {
     check('بناء التقارير الشهرية',
         count($report['monthly']) === 6 && count($report['attendance_trend']) === 14);
 
+    echo "\nبنك المسابقات الجاهزة:\n";
+    $bankCount = quiz_bank_import($entityId);
+    check('نسخ مسابقات البنك إلى الجهة', $bankCount === count(quiz_bank()));
+    check('نسخ الأسئلة مع المسابقات',
+        (int) db_value('SELECT COUNT(*) FROM quiz_questions q JOIN quizzes z ON z.id = q.quiz_id WHERE z.entity_id = ?', [$entityId]) > 20);
+    check('المسابقات المنسوخة تُحفظ كمسودات',
+        (int) db_value('SELECT COUNT(*) FROM quizzes WHERE entity_id = ? AND is_published = 1', [$entityId]) === 1);
+    check('عدم تكرار النسخ عند الاستيراد مرة أخرى', quiz_bank_import($entityId) === 0);
+    $survey = db_one("SELECT * FROM quizzes WHERE entity_id = ? AND type = 'survey' LIMIT 1", [$entityId]);
+    check('استبانات البنك بلا إجابات صحيحة',
+        $survey !== null
+        && (int) db_value('SELECT COUNT(*) FROM quiz_questions WHERE quiz_id = ? AND correct_answer IS NOT NULL', [$survey['id']]) === 0);
+
     echo "\nاستيراد الطلاب:\n";
     $imported = students_import($entityId, "أحمد المستورد، A-1، 0551111111\nخالد المستورد\n\n", $groupId);
     check('استيراد الأسماء وتجاهل الأسطر الفارغة', $imported === 2);

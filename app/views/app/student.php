@@ -1,4 +1,4 @@
-<?php $link = url('/p/' . $student['access_token']); ?>
+<?php $link = absolute_url('/p/' . $student['access_token']); ?>
 
 <div class="grid grid-4">
   <div class="card stat">
@@ -80,6 +80,32 @@
         <?php endif; ?>
       </div>
       <p class="muted small mt-4">رمز الدخول للطالب: <b dir="ltr"><?= e($student['access_token']) ?></b></p>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head"><h2>تنبيه لولي الأمر</h2></div>
+      <form method="post" action="<?= url('/students/' . (int) $student['id'] . '/notify') ?>">
+        <?= csrf_field() ?>
+        <div class="field">
+          <label class="small">العنوان</label>
+          <input class="input" name="title" placeholder="ملاحظة عن الواجب" required>
+        </div>
+        <div class="field">
+          <label class="small">النص</label>
+          <textarea class="textarea" name="body" rows="3" style="min-height:80px"></textarea>
+        </div>
+        <button class="btn btn-outline btn-block" type="submit">🔔 تسجيل التنبيه</button>
+      </form>
+      <p class="muted small mt-4">
+        يُحفظ في <a href="<?= url('/notifications') ?>">سجل التنبيهات</a> مع زر إرسال عبر الواتساب.
+      </p>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head"><h2>تصدير</h2></div>
+      <a class="btn btn-outline btn-block" href="<?= url('/students/' . (int) $student['id'] . '/export') ?>">
+        ⬇️ تصدير سجل النقاط (Excel)
+      </a>
     </div>
   </div>
 </div>

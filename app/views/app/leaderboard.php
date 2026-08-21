@@ -10,7 +10,9 @@
         </a>
       <?php endforeach; ?>
     </div>
-    <form method="get" action="<?= url('/leaderboard') ?>" style="margin-inline-start:auto">
+    <a class="btn btn-outline btn-sm" style="margin-inline-start:auto"
+       href="<?= url('/export/leaderboard?period=' . e($period) . ($groupId ? '&group_id=' . (int) $groupId : '')) ?>">⬇️ تصدير Excel</a>
+    <form method="get" action="<?= url('/leaderboard') ?>">
       <input type="hidden" name="period" value="<?= e($period) ?>">
       <select class="select" name="group_id" onchange="this.form.submit()">
         <option value="">جميع المجموعات</option>
@@ -32,7 +34,7 @@
     <div class="podium">
       <?php foreach ([1, 0, 2] as $index): if (empty($podium[$index])) continue; $row = $podium[$index]; ?>
         <a class="podium-col" href="<?= url('/students/' . (int) $row['id']) ?>">
-          <div style="font-size:22px"><?= ['🥇', '🥈', '🥉'][$index] ?></div>
+          <div class="podium-medal"><?= ['🥇', '🥈', '🥉'][$index] ?></div>
           <div class="podium-face" style="background:<?= $colors[$index] ?>"><?= e(initials($row['name'])) ?></div>
           <div class="podium-name"><?= e($row['name']) ?></div>
           <div class="podium-group"><?= e($row['group_name'] ?: '—') ?></div>

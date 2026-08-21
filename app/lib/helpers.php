@@ -43,6 +43,20 @@ function asset(string $path): string
     return url('/assets/' . ltrim($path, '/'));
 }
 
+/**
+ * رابط كامل يشمل النطاق — يُستخدم لكل رابط يُنسخ أو يُرسل خارج الموقع
+ * (رابط ولي الأمر، التسجيل الذاتي، لوحة الشرف، رسائل الواتساب).
+ */
+function absolute_url(string $path = '/'): string
+{
+    $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+        || ($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https'
+        ? 'https' : 'http';
+    $host = $_SERVER['HTTP_HOST'] ?? ($_SERVER['SERVER_NAME'] ?? 'localhost');
+
+    return $scheme . '://' . $host . url($path);
+}
+
 function redirect(string $path): void
 {
     header('Location: ' . (str_starts_with($path, 'http') ? $path : url($path)));
@@ -251,4 +265,24 @@ function label(string $group, string $key): string
         ],
     ];
     return $labels[$group][$key] ?? $key;
+}
+
+/**
+ * إخراج ملف CSV للتحميل (يفتح مباشرة في Excel).
+ * تُضاف علامة BOM حتى تظهر الحروف العربية بشكل صحيح.
+ */
+function csv_download(string $filename, array $headers, array $rows): void
+{
+    header('Content-Type: text/csv; charset=UTF-8');
+    header('Content-Disposition: attachment; filename="' . $filename . '.csv"');
+    header('Pragma: no-cache');
+
+    $output = fopen('php://output', 'w');
+    fwrite($output, "\xEF\xBB\xBF");
+    fputcsv($output, $headers);
+    foreach ($rows as $row) {
+        fputcsv($output, $row);
+    }
+    fclose($output);
+    exit;
 }

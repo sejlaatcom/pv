@@ -11,6 +11,8 @@
     </select>
     <button class="btn btn-outline btn-sm" type="submit">بحث</button>
     <div style="margin-inline-start:auto;display:flex;gap:8px">
+      <a class="btn btn-outline btn-sm"
+         href="<?= url('/export/students' . (!empty($filters['group_id']) ? '?group_id=' . (int) $filters['group_id'] : '')) ?>">⬇️ تصدير Excel</a>
       <button type="button" class="btn btn-outline btn-sm" data-open="#import-modal">⬆️ استيراد قائمة</button>
       <button type="button" class="btn btn-primary btn-sm" data-open="#add-modal">➕ إضافة طالب</button>
     </div>
@@ -49,10 +51,10 @@
             <td>
               <div style="display:flex;gap:6px;align-items:center">
                 <button type="button" class="btn btn-outline btn-sm"
-                        data-copy="<?= e(url('/p/' . $student['access_token'])) ?>">🔗 رابط ولي الأمر</button>
+                        data-copy="<?= e(absolute_url('/p/' . $student['access_token'])) ?>">🔗 رابط ولي الأمر</button>
                 <?php if ($student['guardian_phone']): ?>
                   <a class="btn btn-outline btn-sm" target="_blank" rel="noopener"
-                     href="<?= e(whatsapp_link($student['guardian_phone'], 'متابعة ' . $student['name'] . ' — الرصيد الحالي ' . $student['total_points'] . ' نقطة: ' . url('/p/' . $student['access_token']))) ?>">💬</a>
+                     href="<?= e(whatsapp_link($student['guardian_phone'], 'متابعة ' . $student['name'] . ' — الرصيد الحالي ' . $student['total_points'] . ' نقطة: ' . absolute_url('/p/' . $student['access_token']))) ?>">💬</a>
                 <?php endif; ?>
               </div>
             </td>

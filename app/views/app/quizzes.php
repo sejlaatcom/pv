@@ -4,7 +4,13 @@
       <h2>المسابقات والاستبانات</h2>
       <p class="muted small">أنشئ مسابقة بأسئلة اختيار من متعدد، وسيصحح النظام إجابات الطلاب ويمنحهم النقاط تلقائياً.</p>
     </div>
-    <a class="btn btn-primary btn-sm" href="<?= url('/quizzes/new') ?>">➕ مسابقة جديدة</a>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <form method="post" action="<?= url('/quizzes/import-bank') ?>">
+        <?= csrf_field() ?>
+        <button class="btn btn-outline btn-sm" type="submit">🏆 نسخ من بنك المسابقات</button>
+      </form>
+      <a class="btn btn-primary btn-sm" href="<?= url('/quizzes/new') ?>">➕ مسابقة جديدة</a>
+    </div>
   </div>
 </div>
 

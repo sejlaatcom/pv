@@ -85,6 +85,7 @@ $routes = [
     ['GET',  '/quizzes',             'quizzes_page'],
     ['GET',  '/quizzes/new',         'quiz_new_page'],
     ['POST', '/quizzes',             'quiz_create_action'],
+    ['POST', '/quizzes/import-bank', 'quiz_bank_action'],
     ['GET',  '/quizzes/{id}',        'quiz_page'],
     ['POST', '/quizzes/{id}/publish', 'quiz_publish_action'],
     ['POST', '/quizzes/{id}/delete',  'quiz_delete_action'],
@@ -93,8 +94,24 @@ $routes = [
     ['GET',  '/settings',            'settings_page'],
     ['POST', '/settings/entity',     'settings_entity_update'],
     ['POST', '/settings/users',      'settings_user_create'],
+    ['POST', '/settings/password',   'settings_password_update'],
     ['POST', '/settings/users/{id}/delete', 'settings_user_delete'],
     ['GET',  '/messages',            'messages_page'],
+
+    // ===== التنبيهات =====
+    ['GET',  '/notifications',        'notifications_page'],
+    ['POST', '/notifications',        'notifications_send'],
+
+    // ===== التصدير إلى Excel =====
+    ['GET',  '/export/students',      'export_students'],
+    ['GET',  '/export/leaderboard',   'export_leaderboard'],
+    ['GET',  '/export/report',        'export_report'],
+    ['GET',  '/students/{id}/export', 'export_student'],
+
+    // ===== صفحات الجهة العامة =====
+    ['GET',  '/join/{token}',         'join_page'],
+    ['POST', '/join/{token}',         'join_submit'],
+    ['GET',  '/e/{token}',            'public_board_page'],
 
     // ===== بوابة الطالب وولي الأمر =====
     ['GET',  '/p/{token}',                 'portal_page'],

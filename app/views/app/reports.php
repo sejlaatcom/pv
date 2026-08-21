@@ -7,7 +7,10 @@
         <a class="chip-btn<?= $period === $key ? ' active' : '' ?>" href="<?= url('/reports?period=' . $key) ?>"><?= e($labelText) ?></a>
       <?php endforeach; ?>
     </div>
-    <button type="button" class="btn btn-outline btn-sm" style="margin-inline-start:auto" onclick="window.print()">🖨️ طباعة التقرير</button>
+    <div style="margin-inline-start:auto;display:flex;gap:8px">
+      <a class="btn btn-outline btn-sm" href="<?= url('/export/report?period=' . e($period)) ?>">⬇️ تصدير Excel</a>
+      <button type="button" class="btn btn-outline btn-sm" onclick="window.print()">🖨️ طباعة التقرير</button>
+    </div>
   </div>
 </div>
 

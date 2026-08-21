@@ -26,12 +26,14 @@ function settings_entity_update(): void
     }
 
     db_update('entities', $entityId, [
-        'name'          => $name,
-        'type'          => input('type', 'school'),
-        'city'          => input('city', '') ?: null,
-        'phone'         => input('phone', '') ?: null,
-        'email'         => input('email', '') ?: null,
-        'primary_color' => input('primary_color', '#0d9488') ?: '#0d9488',
+        'name'                => $name,
+        'type'                => input('type', 'school'),
+        'city'                => input('city', '') ?: null,
+        'phone'               => input('phone', '') ?: null,
+        'email'               => input('email', '') ?: null,
+        'primary_color'       => input('primary_color', '#0d9488') ?: '#0d9488',
+        'allow_self_register' => input('allow_self_register') ? 1 : 0,
+        'public_board'        => input('public_board') ? 1 : 0,
     ]);
 
     flash('success', 'تم حفظ بيانات الجهة');
@@ -82,5 +84,32 @@ function settings_user_delete(int $id): void
     db_delete('users', $id);
 
     flash('success', 'تم حذف المستخدم');
+    redirect('/settings');
+}
+
+/** تغيير كلمة مرور المستخدم الحالي */
+function settings_password_update(): void
+{
+    $user = require_login();
+
+    $current = (string) input('current_password', '');
+    $new     = (string) input('new_password', '');
+    $confirm = (string) input('confirm_password', '');
+
+    if (!password_verify($current, $user['password_hash'])) {
+        flash('error', 'كلمة المرور الحالية غير صحيحة');
+        redirect('/settings');
+    }
+    if (strlen($new) < 6) {
+        flash('error', 'كلمة المرور الجديدة يجب ألا تقل عن 6 أحرف');
+        redirect('/settings');
+    }
+    if ($new !== $confirm) {
+        flash('error', 'كلمتا المرور غير متطابقتين');
+        redirect('/settings');
+    }
+
+    db_update('users', (int) $user['id'], ['password_hash' => password_hash($new, PASSWORD_DEFAULT)]);
+    flash('success', 'تم تغيير كلمة المرور بنجاح');
     redirect('/settings');
 }

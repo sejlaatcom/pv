@@ -81,3 +81,18 @@ function quiz_delete_action(int $id): void
     flash('success', 'تم حذف المسابقة');
     redirect('/quizzes');
 }
+
+/** نسخ المسابقات الجاهزة من البنك إلى الجهة */
+function quiz_bank_action(): void
+{
+    require_login();
+
+    $imported = quiz_bank_import(current_entity_id(), (int) current_user()['id']);
+    flash(
+        $imported > 0 ? 'success' : 'info',
+        $imported > 0
+            ? "تم نسخ $imported مسابقة من البنك (كمسودات جاهزة للمراجعة والنشر)"
+            : 'جميع مسابقات البنك منسوخة لديك مسبقاً'
+    );
+    redirect('/quizzes');
+}

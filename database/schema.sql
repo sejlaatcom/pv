@@ -40,6 +40,10 @@ CREATE TABLE entities (
     primary_color       VARCHAR(20)  DEFAULT '#0d9488',
     subscription_status ENUM('trial','active','expired') NOT NULL DEFAULT 'trial',
     subscription_ends_at DATE        DEFAULT NULL,
+    -- تفعيل رابط التسجيل الذاتي للطلاب: /join/{slug}
+    allow_self_register TINYINT(1)   NOT NULL DEFAULT 0,
+    -- إظهار لوحة شرف عامة للجهة: /e/{slug}
+    public_board        TINYINT(1)   NOT NULL DEFAULT 1,
     created_at          TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 

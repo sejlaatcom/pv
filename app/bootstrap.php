@@ -21,6 +21,7 @@ require __DIR__ . '/lib/auth.php';
 require __DIR__ . '/lib/models.php';
 require __DIR__ . '/lib/modules.php';
 require __DIR__ . '/lib/charts.php';
+require __DIR__ . '/lib/quiz_bank.php';
 
 foreach (glob(__DIR__ . '/controllers/*.php') as $controller) {
     require $controller;

@@ -33,9 +33,67 @@
         <input class="input" type="email" name="email" value="<?= e($entity['email']) ?>" <?= is_admin() ? '' : 'disabled' ?>>
       </div>
       <?php if (is_admin()): ?>
+        <div class="field full" style="display:flex;align-items:center;gap:10px">
+          <input type="checkbox" id="allow_self_register" name="allow_self_register" value="1"
+                 <?= $entity['allow_self_register'] ? 'checked' : '' ?>>
+          <label for="allow_self_register" style="margin:0">تفعيل رابط التسجيل الذاتي للطلاب</label>
+        </div>
+        <div class="field full" style="display:flex;align-items:center;gap:10px">
+          <input type="checkbox" id="public_board" name="public_board" value="1"
+                 <?= $entity['public_board'] ? 'checked' : '' ?>>
+          <label for="public_board" style="margin:0">إظهار لوحة الشرف العامة للجهة</label>
+        </div>
         <div class="full"><button class="btn btn-primary" type="submit">حفظ البيانات</button></div>
       <?php endif; ?>
     </form>
+
+    <?php
+    $joinLink  = absolute_url('/join/' . $entity['slug']);
+    $boardLink = absolute_url('/e/' . $entity['slug']);
+    ?>
+    <div class="mt-6">
+      <h3 style="font-size:15px;margin-bottom:10px">روابط جهتك العامة</h3>
+
+      <div class="card card-pad" style="background:#f9fafb;margin-bottom:10px">
+        <b class="small">رابط التسجيل الذاتي <?= $entity['allow_self_register'] ? '' : '(معطّل حالياً)' ?></b>
+        <div class="small" style="word-break:break-all;margin:6px 0" dir="ltr"><?= e($joinLink) ?></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button type="button" class="btn btn-outline btn-sm" data-copy="<?= e($joinLink) ?>">نسخ</button>
+          <a class="btn btn-outline btn-sm" href="<?= e($joinLink) ?>" target="_blank" rel="noopener">فتح</a>
+        </div>
+      </div>
+
+      <div class="card card-pad" style="background:#f9fafb">
+        <b class="small">رابط لوحة الشرف العامة <?= $entity['public_board'] ? '' : '(معطّل حالياً)' ?></b>
+        <div class="small" style="word-break:break-all;margin:6px 0" dir="ltr"><?= e($boardLink) ?></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button type="button" class="btn btn-outline btn-sm" data-copy="<?= e($boardLink) ?>">نسخ</button>
+          <a class="btn btn-outline btn-sm" href="<?= e($boardLink) ?>" target="_blank" rel="noopener">فتح</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-6">
+      <h3 style="font-size:15px;margin-bottom:10px">تغيير كلمة المرور</h3>
+      <form method="post" action="<?= url('/settings/password') ?>" class="form-grid">
+        <?= csrf_field() ?>
+        <div class="field">
+          <label>كلمة المرور الحالية</label>
+          <input class="input" type="password" name="current_password" required>
+        </div>
+        <div class="field">
+          <label>كلمة المرور الجديدة</label>
+          <input class="input" type="password" name="new_password" required>
+        </div>
+        <div class="field">
+          <label>تأكيد كلمة المرور</label>
+          <input class="input" type="password" name="confirm_password" required>
+        </div>
+        <div class="field" style="padding-top:26px">
+          <button class="btn btn-outline btn-block" type="submit">تغيير كلمة المرور</button>
+        </div>
+      </form>
+    </div>
 
     <div class="mt-6">
       <h3 style="font-size:15px;margin-bottom:8px">حالة الاشتراك</h3>
@@ -107,6 +165,8 @@
       <a class="btn btn-outline btn-sm" href="<?= url('/badges') ?>">🎖️ الأوسمة</a>
       <a class="btn btn-outline btn-sm" href="<?= url('/rewards') ?>">🎁 متجر الجوائز</a>
       <a class="btn btn-outline btn-sm" href="<?= url('/messages') ?>">✉️ رسائل التواصل</a>
+      <a class="btn btn-outline btn-sm" href="<?= url('/notifications') ?>">🔔 التنبيهات</a>
+      <a class="btn btn-outline btn-sm" href="<?= url('/export/students') ?>">⬇️ تصدير الطلاب</a>
     </div>
   </div>
 <?php endif; ?>
